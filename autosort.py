@@ -8,7 +8,7 @@ stack = [source]
 files = []
 dirs = []
 
-fh = open("log_" + time.strftime("%Y%m%d_%H%M%S")+ ".txt","w")
+fh = open("log_" + time.strftime("%Y%m%d_%H%M%S") + ".txt","w")
 
 while len(stack) > 0:
 	f = stack.pop()
@@ -21,7 +21,7 @@ while len(stack) > 0:
 
 for f in files:
 	year = str(time.localtime(os.stat(f).st_mtime).tm_year)
-	ext = os.path.splitext(f)[1][1:]
+	ext = os.path.splitext(f)[1][1:].lower()
 	if len(ext) == 0:
 		ext = "blank"
 	parent = os.path.split(os.path.dirname(f))[1]
@@ -33,6 +33,7 @@ for f in files:
 		c = 0
 		while(os.path.exists(n)):
 			n = os.path.join(target, year, ext, "z%03d" % c, parent, name)
+			c = c + 1
 
 	if not os.path.exists(os.path.split(n)[0]):
 		os.makedirs(os.path.split(n)[0])
